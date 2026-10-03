@@ -36,7 +36,7 @@ public class LavadoraControllerTest {
         lavadoraPrueba.setModelo("TurboWash 2026");
         lavadoraPrueba.setPrecio(2500000.0);
         lavadoraPrueba.setCantidad(5);
-        lavadoraPrueba.setCapacidad(18);
+        lavadoraPrueba.setCapacidad(18.0);
     }
 
     @Test

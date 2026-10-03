@@ -22,6 +22,16 @@ public class LavadoraController {
         return repository.findAll();
     }
 
+    @GetMapping("/buscar")
+    public List<Lavadora> buscar(
+            @RequestParam(required = false) String texto,
+            @RequestParam(required = false) Double precioMax,
+            @RequestParam(required = false) Double capacidadMin) {
+
+        String textoLimpio = (texto != null && !texto.trim().isEmpty()) ? texto.trim() : null;
+        return repository.buscarConFiltros(textoLimpio, precioMax, capacidadMin);
+    }
+
     @PostMapping
     public Lavadora guardar(@Valid @RequestBody Lavadora lavadora) {
         return repository.save(lavadora);
@@ -36,6 +46,7 @@ public class LavadoraController {
                     l.setPrecio(nueva.getPrecio());
                     l.setCantidad(nueva.getCantidad());
                     l.setCapacidad(nueva.getCapacidad());
+                    l.setImagenUrl(nueva.getImagenUrl());
                     return repository.save(l);
                 })
                 .orElseThrow(() -> new RecursoNoEncontradoException("Lavadora no encontrada con id: " + id));
@@ -46,4 +57,3 @@ public class LavadoraController {
         repository.deleteById(id);
     }
 }
-
