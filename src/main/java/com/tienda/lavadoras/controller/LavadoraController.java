@@ -44,7 +44,7 @@ public class LavadoraController {
                     l.setMarca(nueva.getMarca());
                     l.setModelo(nueva.getModelo());
                     l.setPrecio(nueva.getPrecio());
-                    l.setCantidad(nueva.getCantidad());
+                    l.setStock(nueva.getStock()); //
                     l.setCapacidad(nueva.getCapacidad());
                     l.setImagenUrl(nueva.getImagenUrl());
                     return repository.save(l);

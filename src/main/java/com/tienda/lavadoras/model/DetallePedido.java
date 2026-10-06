@@ -1,6 +1,7 @@
 package com.tienda.lavadoras.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 @Entity
@@ -12,7 +13,7 @@ public class DetallePedido {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "pedido_id", nullable = false)
+    @JoinColumn(name = "pedido_id")
     @JsonIgnore
     private Pedido pedido;
 
@@ -20,14 +21,14 @@ public class DetallePedido {
     @JoinColumn(name = "lavadora_id", nullable = false)
     private Lavadora lavadora;
 
-    @Column(nullable = false)
-    private Integer cantidad;
+    private Integer cantidad = 1;
 
-    @Column(nullable = false)
-    private Double precioUnitario;
+    @Column(name = "precio_unitario")
+    private Double precioUnitario = 0.0;
 
-    @Column(nullable = false)
-    private Double subtotal;
+    private Double subtotal = 0.0; // <-- Campo obligatorio de la base de datos
+
+    public DetallePedido() {}
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -38,8 +39,11 @@ public class DetallePedido {
     public Lavadora getLavadora() { return lavadora; }
     public void setLavadora(Lavadora lavadora) { this.lavadora = lavadora; }
 
-    public Integer getCantidad() { return cantidad; }
+    public Integer getCantidad() { return cantidad != null ? cantidad : 1; }
     public void setCantidad(Integer cantidad) { this.cantidad = cantidad; }
+
+    @JsonProperty("quantity")
+    public void setQuantity(Integer quantity) { this.cantidad = quantity; }
 
     public Double getPrecioUnitario() { return precioUnitario; }
     public void setPrecioUnitario(Double precioUnitario) { this.precioUnitario = precioUnitario; }

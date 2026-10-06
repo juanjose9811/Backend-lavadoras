@@ -1,7 +1,7 @@
 package com.tienda.lavadoras.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 
 @Entity
 @Table(name = "lavadoras")
@@ -14,16 +14,16 @@ public class Lavadora {
     private String marca;
     private String modelo;
     private Double precio;
-    private Integer cantidad;
-    private Double capacidad;
+    private Integer capacidad;
 
-    // Campo para la URL de la imagen
-    @Column(length = 500)
+    @Column(name = "stock")
+    private Integer stock;
+
+    @Column(name = "imagen_url")
     private String imagenUrl;
 
     public Lavadora() {}
 
-    // GETTERS Y SETTERS
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -36,11 +36,17 @@ public class Lavadora {
     public Double getPrecio() { return precio; }
     public void setPrecio(Double precio) { this.precio = precio; }
 
-    public Integer getCantidad() { return cantidad; }
-    public void setCantidad(Integer cantidad) { this.cantidad = cantidad; }
+    public Integer getCapacidad() { return capacidad; }
+    public void setCapacidad(Integer capacidad) { this.capacidad = capacidad; }
 
-    public Double getCapacidad() { return capacidad; }
-    public void setCapacidad(Double capacidad) { this.capacidad = capacidad; }
+    public Integer getStock() { return stock != null ? stock : 0; }
+    public void setStock(Integer stock) { this.stock = stock; }
+
+    // Alias JSON para garantizar compatibilidad si React busca "cantidad" en las tarjetas
+    @JsonProperty("cantidad")
+    public Integer getCantidadAlias() {
+        return getStock();
+    }
 
     public String getImagenUrl() { return imagenUrl; }
     public void setImagenUrl(String imagenUrl) { this.imagenUrl = imagenUrl; }
